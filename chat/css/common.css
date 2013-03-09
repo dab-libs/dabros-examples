@@ -1,0 +1,58 @@
+body
+{
+	background: black;
+	color: gainsboro;
+	font-family: Arial, Verdana;
+	font-size: 14px;
+}
+
+h1
+{
+	color: white;
+	font-size: 18px;
+	text-align: center;
+}
+
+ul.errorSummary
+{
+	display: block;
+	background: #900;
+	border: 1px red solid;
+}
+
+#loginPanel
+{
+	border: 1px solid white;
+	padding: 5px;
+	overflow: hidden;
+}
+
+#loginPanel
+{
+	width: 300px;
+	margin: 200px auto 0;
+}
+
+#loginPanel label,
+#loginPanel input
+{
+	display: block;
+	float: left;
+}
+
+#loginPanel label
+{
+	width: 100px;
+	clear: left;
+}
+
+#loginPanel input
+{
+	width: 196px;
+}
+
+#loginPanel input[type=submit]
+{
+	width: 76px;
+	float: right;
+}
