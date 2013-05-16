@@ -1,5 +1,5 @@
 <?php
-require 'classes/dabros/dabros.php';
+require '../dabros/dabros.php';
 ?>
 <!DOCTYPE html>
 <html>
