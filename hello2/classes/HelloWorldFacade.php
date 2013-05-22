@@ -13,8 +13,20 @@
  */
 class HelloWorldFacade
 {
-	public function getHello()
+	private $loginInfo = array(
+		'loggedIn' => false,
+	);
+
+	public function getLoginInfo()
 	{
-		return 'Hello World!!!';
+		return $this->loginInfo;
+	}
+
+	public function login($name)
+	{
+		$this->loginInfo['loggedIn'] = true;
+		$this->loginInfo['name'] = $name;
+		$this->loginInfo['date'] = new DateTime();
+		return $this->loginInfo;
 	}
 }

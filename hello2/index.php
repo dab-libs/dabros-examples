@@ -10,7 +10,7 @@ require '../dabros/dabros.php';
 			.wait #waitPanel, .login #loginPanel, .hello #helloPanel { display: block; }
 		</style>
 
-		<?php dabros::printJavaScriptTags('/hello1/js'); ?>
+		<?php dabros::printJavaScriptTags('/hello2/js'); ?>
 
 		<script>
 			var helloWorldFacade;
@@ -18,7 +18,7 @@ require '../dabros/dabros.php';
 			function init()
 			{
 				$('body').attr('class', 'wait');
-				$('#loginPanel form').submit();
+				$('#loginPanel form').submit(onLoginSubmit);
 				var rosFactory = new dabros.RemoteObjectFactory('/hello2/dabros-handler.php');
 				rosFactory.getSessionFacade('HelloWorldFacade', onHelloWorldFacade);
 			}
@@ -33,9 +33,9 @@ require '../dabros/dabros.php';
 			{
 				if (response.result.loggedIn)
 				{
-					$('#helloPanel #name').html(response.result.login);
-					$('#helloPanel #date').html();
-					$('#helloPanel #time').html();
+					$('#helloPanel #name').html(response.result.name);
+					$('#helloPanel #date').html(response.result.date.toUTCString());
+					$('#helloPanel #time').html(response.result.date.toString());
 					$('body').attr('class', 'hello');
 				}
 				else
@@ -47,7 +47,9 @@ require '../dabros/dabros.php';
 			function onLoginSubmit(eventData)
 			{
 				$('body').attr('class', 'wait');
-				helloWorldFacade.login(onLoggedIn);
+				helloWorldFacade.login($('#login').val(), onLoggedIn);
+				eventData.preventDefault();
+				return false;
 			}
 
 			$(init);
@@ -55,7 +57,7 @@ require '../dabros/dabros.php';
 	</head>
 
 	<body class="wait">
-		<div id="waitPanel"></div>
+		<div id="waitPanel">Подождите...</div>
 		<div id="loginPanel">
 			<form>
 				<input id="login" type="text" />
