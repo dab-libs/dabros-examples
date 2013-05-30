@@ -5,5 +5,5 @@ require '../dabros/dabros.php';
 
 $config = require 'classes/config.php';
 
-dabros::initialize($config['db']);
+dabros::initialize($config);
 dabros::getRemoteObjectManager()->handle();
