@@ -16,7 +16,7 @@ class HelloWorldFacade
 
 	public function getMyUser()
 	{
-		return dabros::getUserSession()->getUser();
+		return dabros::getRemoteUserSession()->getUser();
 	}
 
 	public function register($login, $password)
@@ -25,7 +25,7 @@ class HelloWorldFacade
 		if (!is_null($user))
 		{
 			$user->_addRole('user');
-			dabros::getUserSession()->login($user);
+			dabros::getRemoteUserSession()->login($user);
 			return $user;
 		}
 		return null;
@@ -34,10 +34,10 @@ class HelloWorldFacade
 	public function login($login, $password)
 	{
 		$user = dabros::getRemoteObjectManager()->getObjectProxy('user_' . $login);
-		/* @var $user User */
+		/* @var $user RemoteUser */
 		if (!is_null($user) && $user->_isPassword($password))
 		{
-			dabros::getUserSession()->login($user);
+			dabros::getRemoteUserSession()->login($user);
 			return $user;
 		}
 		return null;
@@ -45,7 +45,7 @@ class HelloWorldFacade
 
 	public function logout()
 	{
-		dabros::getUserSession()->logout();
+		dabros::getRemoteUserSession()->logout();
 		return $this->getMyUser();
 	}
 

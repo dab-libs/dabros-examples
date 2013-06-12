@@ -11,7 +11,7 @@
 /**
  * Пользователь
  */
-class HelloUser extends User
+class HelloUser extends RemoteUser
 {
 
 	private $createdDate;

@@ -8,7 +8,7 @@ return array(
 			'table' => 'hello2_storage',
 		),
 	),
-	'UserSession' => array(
+	'RemoteUserSession' => array(
 		'sessionFacadeClassName' => 'HelloWorldFacade',
 	),
 	'javaScrptPath' => '/hello2/js',
