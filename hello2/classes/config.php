@@ -7,6 +7,8 @@ return array(
 			'password' => '',
 			'table' => 'hello2_storage',
 		),
+	),
+	'UserSession' => array(
 		'sessionFacadeClassName' => 'HelloWorldFacade',
 	),
 	'javaScrptPath' => '/hello2/js',

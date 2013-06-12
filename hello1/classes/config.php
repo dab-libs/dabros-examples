@@ -1,9 +1,16 @@
 <?php
 return array(
-	db => array(
-		'connectionString' => 'mysql:host=localhost;dbname=dabros-examples',
-		'username' => 'root',
-		'password' => '',
-		'table' => 'hello1_storage',
-	)
+	'RemoteObjectManager' => array(
+		'db' => array(
+			'connectionString' => 'mysql:host=localhost;dbname=dabros-examples',
+			'username' => 'root',
+			'password' => '',
+			'table' => 'hello1_storage',
+		),
+	),
+	'UserSession' => array(
+		'sessionFacadeClassName' => 'HelloWorldFacade',
+	),
+	'javaScrptPath' => '/hello1/js',
+	'dabrosUrl' => '/hello1/dabros-handler.php',
 );

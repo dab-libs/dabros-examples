@@ -13,20 +13,51 @@
  */
 class HelloWorldFacade
 {
-	private $loginInfo = array(
-		'loggedIn' => false,
-	);
 
-	public function getLoginInfo()
+	public function getMyUser()
 	{
-		return $this->loginInfo;
+		return dabros::getUserSession()->getUser();
 	}
 
-	public function login($name)
+	public function register($login, $password)
 	{
-		$this->loginInfo['loggedIn'] = true;
-		$this->loginInfo['name'] = $name;
-		$this->loginInfo['date'] = new DateTime();
-		return $this->loginInfo;
+		$user = dabros::getRemoteObjectManager()->createObject('HelloUser', 'user_' . $login, array($login, $password));
+		if (!is_null($user))
+		{
+			$user->_addRole('user');
+			dabros::getUserSession()->login($user);
+			return $user;
+		}
+		return null;
 	}
+
+	public function login($login, $password)
+	{
+		$user = dabros::getRemoteObjectManager()->getObjectProxy('user_' . $login);
+		/* @var $user User */
+		if (!is_null($user) && $user->_isPassword($password))
+		{
+			dabros::getUserSession()->login($user);
+			return $user;
+		}
+		return null;
+	}
+
+	public function logout()
+	{
+		dabros::getUserSession()->logout();
+		return $this->getMyUser();
+	}
+
+	public function _accessRules()
+	{
+		return array(
+			array(
+				'deny',
+				'roles' => array('user'),
+				'methods' => array('login'),
+			)
+		);
+	}
+
 }
