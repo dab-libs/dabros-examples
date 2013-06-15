@@ -1,5 +1,4 @@
 <?php
-require 'classes/ClassLoader.php';
 require '../dabros/dabros.php';
 
 $config = require 'classes/config.php';
@@ -13,8 +12,6 @@ dabros::initialize($config);
 		<?php dabros::printJavaScriptTags(); ?>
 
 		<script>
-			var helloWorldFacade;
-
 			function init()
 			{
 				dabros.getSessionFacade().getHello(function(response)

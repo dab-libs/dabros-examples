@@ -1,5 +1,4 @@
 <?php
-require 'classes/ClassLoader.php';
 require '../dabros/dabros.php';
 
 $config = require 'classes/config.php';

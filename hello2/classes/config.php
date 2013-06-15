@@ -11,6 +11,7 @@ return array(
 	'RemoteUserSession' => array(
 		'sessionFacadeClassName' => 'HelloWorldFacade',
 	),
+	'phpClassPath' => 'classes',
 	'javaScrptPath' => '/hello2/js',
 	'dabrosUrl' => '/hello2/dabros-handler.php',
 );
