@@ -18,6 +18,7 @@ dabros::initialize($config);
 		<?php dabros::printJavaScriptTags(); ?>
 
 		<script>
+			var myUser = null;
 
 			function init()
 			{
@@ -31,44 +32,46 @@ dabros::initialize($config);
 
 			function onMyUser(response)
 			{
-				var myUser = response.result;
-				if (myUser != null)
+				myUser = response.result;
+				myUser.isGuest(function(response)
 				{
-					myUser.isGuest(function(response)
+					if (response.result)
 					{
-						if (response.result)
+						$('body').attr('class', 'enter');
+					}
+					else
+					{
+						$('body').attr('class', 'wait');
+						myUser.getLogin(function(response)
 						{
-							$('body').attr('class', 'enter');
-						}
-						else
+							$('body').attr('class', 'hello');
+							$('#helloPanel #name').html(response.result);
+						});
+						myUser.getCreatedDate(function(response)
 						{
-							$('body').attr('class', 'wait');
-							myUser.getLogin(function(response)
-							{
-								$('body').attr('class', 'hello');
-								$('#helloPanel #name').html(response.result);
-							});
-							myUser.getCreatedDate(function(response)
-							{
-								$('body').attr('class', 'hello');
-								$('#helloPanel #date').html(response.result.toLocaleDateString());
-								$('#helloPanel #time').html(response.result.toLocaleTimeString());
-							});
-						}
-					});
-				}
-				else
-				{
-					$('body').attr('class', 'enter');
-					$('#enterPanel').addClass('error');
-				}
+							$('body').attr('class', 'hello');
+							$('#helloPanel #date').html(response.result.toLocaleDateString());
+							$('#helloPanel #time').html(response.result.toLocaleTimeString());
+						});
+					}
+				});
 			}
 
 			function onLoginSubmit(eventData)
 			{
 				$('body').attr('class', 'wait');
 				$('#enterPanel').removeClass('error');
-				dabros.getSessionFacade().login($('#loginPanel #login').val(), $('#loginPanel #password').val(), onMyUser);
+				var login = $('#loginPanel #login').val();
+				var password = $('#loginPanel #password').val()
+				dabros.getSessionFacade().login(login, password, function (response)
+				{
+					if (!response.result)
+					{
+						$('body').attr('class', 'enter');
+						$('#enterPanel').addClass('error');
+					}
+				});
+				dabros.getSessionFacade().getMyUser(onMyUser);
 				eventData.preventDefault();
 				return false;
 			}
@@ -77,7 +80,17 @@ dabros::initialize($config);
 			{
 				$('body').attr('class', 'wait');
 				$('#enterPanel').removeClass('error');
-				dabros.getSessionFacade().register($('#registerPanel #login').val(), $('#registerPanel #password').val(), onMyUser);
+				var login = $('#registerPanel #login').val();
+				var password = $('#registerPanel #password').val()
+				dabros.getSessionFacade().register(login, password, function (response)
+				{
+					if (!response.result)
+					{
+						$('body').attr('class', 'enter');
+						$('#enterPanel').addClass('error');
+					}
+				});
+				dabros.getSessionFacade().getMyUser(onMyUser);
 				eventData.preventDefault();
 				return false;
 			}
@@ -96,7 +109,8 @@ dabros::initialize($config);
 				$('#password').val('');
 				$('#enterPanel').removeClass('register');
 				$('body').attr('class', 'wait');
-				dabros.getSessionFacade().logout(onMyUser);
+				myUser.logout();
+				dabros.getSessionFacade().getMyUser(onMyUser);
 				eventData.preventDefault();
 				return false;
 			}

@@ -9,33 +9,40 @@
  */
 
 /**
- * Пользователь
+ * Пользователь приложения HelloWorld
  */
 class HelloUser extends RemoteUser
 {
 
-	private $createdDate;
+  /**
+   * Дата создания (регистрации) учетной записи пользователя
+   * @var DateTime
+   */
+  private $createdDate;
 
-	/**
-	 * Создает объект
-	 */
-	public function __construct($login, $password)
-	{
-		parent::__construct($login, $password);
-		$this->_addRole('user');
-		$this->createdDate = new DateTime();
-	}
+  /**
+   * Создает объект
+   */
+  public function __construct($login, $password)
+  {
+    parent::__construct($login, $password);
+    $this->createdDate = new DateTime();
+  }
 
-	public function getCreatedDate()
-	{
-		return $this->createdDate;
-	}
+  /**
+   * Возвращает дату создания (регистрации) учетной записи пользователя
+   * @return DataTime
+   */
+  public function getCreatedDate()
+  {
+    return $this->createdDate;
+  }
 
-	public function _consts()
-	{
-		return array_merge(parent::_consts(), array(
-			'getCreatedDate'
-		));
-	}
+  public function _consts()
+  {
+    return array_merge(parent::_consts(), array(
+      'getCreatedDate'
+    ));
+  }
 
 }
