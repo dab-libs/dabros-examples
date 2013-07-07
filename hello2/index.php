@@ -1,6 +1,6 @@
 <?php
 // Подключаем библиотеку
-require 'dabros/dabros.php';
+require '../dabros/dabros.php';
 // Считываем настройки
 $config = require 'classes/config.php';
 // Инициалируем библиотеку
